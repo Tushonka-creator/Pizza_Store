@@ -1,4 +1,5 @@
 import sys
+#mport re
 #спрашиваем имя пользователя
 user_name = input('введите имя')
 user_surname = input('введите фамилию')
@@ -21,7 +22,9 @@ def hello_user(name, surname, age):
     elif age < 120 or age <= 18:
         print(f"1. пеперони(600гр.)1000руб.    2. маргарита(600гр.)1000руб.    3. 4 сыра(600гр.)1000руб.\n"
               f"1. кола(500мл)300руб.      2. спрайт(500мл)300руб.        3. вода(500мл)100руб.      4. капучино(200мл)"
-              f"200руб.\n")
+              f"200руб.\n"
+              f"кастом: \n"
+              f"1. пепперони(500руб.)    2. сыр(500руб.)   3. помидоры(500руб.)\n")
     return
 
 
@@ -29,13 +32,23 @@ hello_user(name=user_name, age=user_age, surname=user_surname)
 
 
 #Пользователь выбирает пиццу
-user_var_pizza = int(input('выберите вариант пиццы'))
-user_pizza = int(input("выберите пиццу"))
-user_drink = int(input("выберите напиток"))
+#user_var_pizza = int(input('выберите вариант пиццы'))
+#user_pizza = int(input("выберите пиццу"))
+#user_drink = int(input("выберите напиток"))
+
+
+#используем декоратор
+def select(total_choose):
+    def total_output():
+        print('***********************')
+        total_choose()
+        print('***********************')
+    return total_output()
 
 
 #выводим чек
-def total_choose(age, var_pizza, pizza, drink):
+@select
+def total_choose(age, user_var_pizza, user_pizza, user_drink):
     if age < 18 or age > 1:
         if user_var_pizza == 1:
             var_pizza = "готовая"
@@ -46,14 +59,49 @@ def total_choose(age, var_pizza, pizza, drink):
             elif user_pizza == 3:
                 pizza = '4 сыра(300гр.)...................500руб.'
             elif user_pizza == 4:
-                pizza = 'кидс.............................250руб.'
+                pizza = 'кидс(300гр.).....................250руб.'
         elif user_var_pizza == 2:
             var_pizza = "кастом"
-            print(f"1. пеперони(300гр.)500руб.    2. маргарита(300гр.)500руб.    3. 4 сыра(300гр.)500руб.    4.пицца кидс(250руб.)\n"
-              f"1. сок(200мл)100руб.    2. вода(200мл)50руб.    3. морс(200мл)100руб.\n"
-              f"кастом:\n"
-              f"1. пепперони(250руб.)    2. сыр(250руб.)   3. помидоры(250руб.)\n")
+            if user_pizza == 1:
+                pizza = "мясная начинка(300гр.)...........250руб."
+            elif user_pizza == 2:
+                pizza = "сладкая начинка(300гр.)..........250руб."
+            elif user_pizza == 3:
+                pizza = 'начинка с ананасами(300гр.)......250руб.'
+        if user_drink == 1:
+            drink = "сок(200мл)...........................100руб."
+        elif user_drink == 2:
+            drink = "вода(200мл)..........................50руб."
+        elif user_drink == 3:
+            drink = "морс(200мл)..........................100руб."
     elif age < 120 or age <= 18:
-        print(f"1. пицца пеперони(600гр.)1000руб.    2. пицца маргарита(600гр.)1000руб.    3. пицца 4 сыра(600гр.)1000руб.\n"
-              f"1. кола(500мл)300руб.      2. спрайт(500мл)300руб.        3. вода(500мл)100руб.      4. капучино(200мл)200руб.\n")
+        if user_var_pizza == 1:
+            var_pizza = "готовая"
+            if user_pizza == 1:
+                pizza = "пепперони(600г.)................1000руб."
+            elif user_pizza == 2:
+                pizza = "маргарита(300г.)................1000руб."
+            elif user_pizza == 3:
+                pizza = '4 сыра(300гр.)..................1000руб.'
+        elif user_var_pizza == 2:
+            var_pizza = "кастом"
+            if user_pizza == 1:
+                pizza = "мясная начинка(600гр.)...........500руб."
+            elif user_pizza == 2:
+                pizza = "сладкая начинка(600гр.)..........500руб."
+            elif user_pizza == 3:
+                pizza = 'начинка с ананасами(600гр.)......500руб.'
+        if user_drink == 1:
+            drink = "кола(500мл)..........................300руб."
+        elif user_drink == 2:
+            drink = "спрайт(500мл)........................300руб."
+        elif user_drink == 3:
+            drink = "вода(500мл)..........................100руб."
+        elif user_drink == 4:
+            drink = "капучино(200мл)......................200руб."
+
+
     return
+
+
+total_choose(user_drink=1, user_pizza=1, user_var_pizza=1, age = user_age)

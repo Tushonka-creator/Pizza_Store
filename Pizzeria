@@ -1,5 +1,6 @@
+
 import sys
-#mport re
+import re
 #спрашиваем имя пользователя
 user_name = input('введите имя')
 user_surname = input('введите фамилию')
@@ -31,29 +32,30 @@ def hello_user(name, surname, age):
 hello_user(name=user_name, age=user_age, surname=user_surname)
 
 
-#Пользователь выбирает пиццу
-#user_var_pizza = int(input('выберите вариант пиццы'))
-#user_pizza = int(input("выберите пиццу"))
-#user_drink = int(input("выберите напиток"))
-
-
 #используем декоратор
-def select(total_choose):
-    def total_output():
-        print('***********************')
-        total_choose()
-        print('***********************')
-    return total_output()
+def select(input_func):
+    def output_func(age, user_var_pizza, user_pizza, user_drink, var_pizza, pizza, drink):
+        print("*****************")
+        input_func(user_drink=1, user_pizza=1, user_var_pizza=1, age=user_age, drink=user_drink, pizza=user_pizza,
+             var_pizza=user_var_pizza)
+        print("*****************")
+    return output_func
+
+
+#Пользователь выбирает пиццу
+user_var_pizza = int(input('выберите вариант пиццы'))
+user_pizza = int(input("выберите пиццу"))
+user_drink = int(input("выберите напиток"))
 
 
 #выводим чек
 @select
-def total_choose(age, user_var_pizza, user_pizza, user_drink):
+def total_choose(age, var_pizza, pizza, drink):
     if age < 18 or age > 1:
         if user_var_pizza == 1:
-            var_pizza = "готовая"
+            var_pizza = " готовая"
             if user_pizza == 1:
-                pizza = "пепперони(300г.).................500руб."
+                pizza = "пепперони(300г.).....................500руб."
             elif user_pizza == 2:
                 pizza = "маргарита(300г.).................500руб."
             elif user_pizza == 3:
@@ -99,9 +101,16 @@ def total_choose(age, user_var_pizza, user_pizza, user_drink):
             drink = "вода(500мл)..........................100руб."
         elif user_drink == 4:
             drink = "капучино(200мл)......................200руб."
+    print(var_pizza, '\n',
+          pizza, '\n',
+          drink, '\n')
 
 
     return
 
 
-total_choose(user_drink=1, user_pizza=1, user_var_pizza=1, age = user_age)
+total_choose(age=user_age, drink=user_drink, pizza=user_pizza, var_pizza=user_var_pizza, user_var_pizza=user_var_pizza,
+             user_pizza=user_pizza, user_drink=user_drink)
+
+
+
